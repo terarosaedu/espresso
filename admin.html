@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>강사 화면 | 에스프레소 베리에이션 실습 노트</title>
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="admin">
+  <div class="shell">
+    <header class="admin-top">
+      <div class="brand"><img src="assets/logo.png" class="logo" alt="TERAROSA"><span>실습 노트 강사 화면</span></div>
+      <button id="adminLogout" class="link-btn" type="button" hidden>로그아웃</button>
+    </header>
+
+    <!-- 로그인 -->
+    <section id="adminLogin" class="admin-main" hidden>
+      <form id="adminLoginForm" class="stack" style="max-width:380px">
+        <h1 class="section-title">강사 로그인</h1>
+        <label class="field"><span>이메일</span><input id="adminEmail" type="email" autocomplete="username" required></label>
+        <label class="field"><span>비밀번호</span><input id="adminPw" type="password" autocomplete="current-password" required></label>
+        <p id="adminLoginError" class="error" hidden></p>
+        <button class="btn btn-primary" type="submit">로그인</button>
+      </form>
+    </section>
+
+    <!-- 대시보드 -->
+    <main id="adminMain" class="admin-main" hidden>
+      <div class="cohort-bar">
+        <label class="field"><span>기수</span><select id="cohortSelect"></select></label>
+        <button id="refreshBtn" class="btn" type="button">새로고침</button>
+      </div>
+
+      <details class="new-cohort">
+        <summary>새 기수 만들기</summary>
+        <form id="cohortForm">
+          <label class="field"><span>기수 코드</span><input id="cCode" required placeholder="예: 2611A"></label>
+          <label class="field"><span>과정명</span><input id="cTitle" value="에스프레소 베리에이션"></label>
+          <label class="field"><span>1일차</span><input id="cD1" type="date" required></label>
+          <label class="field"><span>2일차</span><input id="cD2" type="date" required></label>
+          <label class="field"><span>3일차</span><input id="cD3" type="date" required></label>
+          <button class="btn btn-primary" type="submit">만들기</button>
+        </form>
+      </details>
+
+      <section id="cohortView" class="admin-main" style="padding:0" hidden>
+        <div class="stats" id="stats"></div>
+        <div class="missing" id="missing"></div>
+        <div class="actions">
+          <button id="copyAllBtn" class="btn btn-primary" type="button">총평 자료 전체 복사</button>
+          <button id="csvBtn" class="btn" type="button">근태·만족도 CSV</button>
+          <button id="zipBtn" class="btn" type="button">사진 전체 ZIP</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>이름</th><th>1일차</th><th>2일차</th><th>3일차</th><th>피드백</th><th>라테 사진</th><th>카푸치노 사진</th><th>만족도</th></tr>
+            </thead>
+            <tbody id="studentRows"></tbody>
+          </table>
+        </div>
+        <p class="muted small" style="margin:0">이름을 누르면 피드백, 사진, 만족도 응답을 자세히 볼 수 있어요.</p>
+      </section>
+      <p id="noCohort" class="empty" hidden>아직 만든 기수가 없어요. 위에서 새 기수를 만들고 코드를 교육생에게 알려 주세요.</p>
+    </main>
+  </div>
+
+  <dialog id="detail" class="detail">
+    <div class="detail-head">
+      <h2 id="dName"></h2>
+      <div class="actions">
+        <button id="dCopy" class="btn btn-primary" type="button">총평 자료 복사</button>
+        <button id="dClose" class="btn" type="button">닫기</button>
+      </div>
+    </div>
+    <div class="detail-body" id="dBody"></div>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
