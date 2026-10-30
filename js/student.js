@@ -134,7 +134,8 @@
     let title;
     if (state.dayIdx) title = `${state.dayIdx}일차`;
     else if (dates.length && today < dates[0]) title = '교육 전';
-    else title = '교육 종료';
+    else if (dates.length && today > dates[dates.length - 1]) title = '교육 종료';
+    else title = '교육 없는 날';
     $('#dayTitle').textContent = title;
     const passed = dates.filter(d => d <= today).length;
     $$('#dayTrack span').forEach((el, i) => el.classList.toggle('on', i < passed));
